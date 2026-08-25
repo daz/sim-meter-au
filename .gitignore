@@ -1,0 +1,9 @@
+/.bundle/
+/Gemfile.lock
+/.env
+/.env.*
+!/.env.example
+/.ruby-lsp/
+/coverage/
+/pkg/
+/*.gem
