@@ -3,10 +3,6 @@
 Sim Meter AU provides a unified Ruby API for retrieving services, plan details,
 data balances, expiry dates and usage from Australian mobile providers.
 
-It currently supports ALDImobile through authenticated HTTP requests and
-HTML/JSON parsing. It does not execute the provider portal's JavaScript and does
-not require a web browser.
-
 ## Installation
 
 Add the gem to your Gemfile:
@@ -28,9 +24,7 @@ The currently available provider is:
 - `:aldi_mobile` — ALDImobile
 
 Every provider inherits from `SimMeterAU::Provider` and implements the same
-operations: authentication, services, service details, usage and orders. This
-keeps application code consistent as additional Australian providers are
-added.
+operations: authentication, services, service details, usage and orders. **Pull requests welcome**.
 
 Use `SimMeterAU.providers` to get the registered provider names.
 
