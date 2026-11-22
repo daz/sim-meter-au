@@ -293,7 +293,8 @@ module SimMeterAU
       @out.puts
 
       summary_rows = report.summaries.map do |summary|
-        [summary.type, summary.count.to_s, summary.rounded_usage, "$#{summary.charge_dollars}"]
+        charge = summary.charge_dollars.nil? ? "Unknown" : "$#{summary.charge_dollars}"
+        [summary.type, summary.count.to_s, summary.rounded_usage, charge]
       end
       print_table(["TYPE", "COUNT", "ROUNDED USAGE", "CHARGE"], summary_rows)
       @out.puts "No usage found." if summary_rows.empty?

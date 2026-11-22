@@ -156,6 +156,17 @@ class SimMeterAUCLITest < Minitest::Test
     assert_empty error
   end
 
+  def test_usage_summary_reports_unavailable_charges_as_unknown
+    report = sample_usage_report
+    summary = report.summaries.first.with(charge_dollars: nil)
+    report = report.with(summaries: [summary])
+    status, output, error = run_cli(["service", "0400000001", "usage"], usage_report: report)
+
+    assert_equal 0, status
+    assert_includes output, "Unknown"
+    assert_empty error
+  end
+
   private
 
   def run_cli(arguments, services: [], details: nil, usage_report: nil, orders: [])

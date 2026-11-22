@@ -28,6 +28,21 @@ operations: authentication, services, service details, usage and orders. **Pull 
 
 Use `SimMeterAU.providers` to get the registered provider names.
 
+It currently supports ALDImobile through direct HTTPS requests to the JSON API
+used by the current My ALDI Mobile portal. It uses Ruby's `Net::HTTP` and does
+not require a web browser, headless browser, JavaScript runtime or Rails.
+
+Version 0.1.1 replaces the HTML login integration that stopped working when
+ALDImobile migrated its portal in November 2026. Update applications using 0.1.0:
+
+```sh
+bundle update sim-meter-au
+```
+
+The Ruby methods and returned models are unchanged. Provider service IDs have
+changed, so use a mobile number to find a service previously stored with an old
+numeric ID, then save the new `details.service.id`.
+
 ## Ruby API
 
 Create a client by selecting a provider and supplying that provider's
@@ -113,6 +128,18 @@ details.to_h
   references.
 - `client.authenticated?` reports whether the current provider session is
   authenticated.
+
+Usage dates are inclusive and may span up to 366 days. Usage and orders retrieve
+all pages. Data quantities use bytes (1024 bytes per KB); call usage is in seconds.
+The API does not provide summary charges, so `UsageSummary#charge_dollars` is
+`nil`; individual usage records retain their reported charges. Unavailable
+roaming status and other optional fields are returned as `nil`.
+
+Authentication failures (including an expired session or required password
+change) raise `SimMeterAU::AuthenticationError`. Temporary network errors,
+rate limits and provider outages raise `SimMeterAU::ConnectionError`.
+Malformed or incomplete responses raise `SimMeterAU::UnexpectedResponseError`
+instead of being returned as zero balances or empty results.
 
 ## Command-line utility
 

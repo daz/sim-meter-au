@@ -24,9 +24,11 @@ Gem::Specification.new do |spec|
   spec.executables = ["sim-meter-au"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "mechanize", "~> 2.14"
+  spec.add_dependency "bigdecimal", ">= 3.1", "< 5"
+  spec.add_dependency "net-http", ">= 0.6", "< 1"
   spec.add_dependency "dotenv", "~> 3.2"
   spec.add_development_dependency "minitest", "~> 5.25"
   spec.add_development_dependency "rake", "~> 13.2"
   spec.add_development_dependency "webmock", "~> 3.24"
+  spec.add_development_dependency "nokogiri", "~> 1.19"
 end
